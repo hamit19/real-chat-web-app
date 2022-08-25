@@ -1,5 +1,6 @@
 import React from "react";
 import { ChannelList } from "stream-chat-react";
+import Cookies from "universal-cookie";
 
 import {
   ChannelSearch,
@@ -10,6 +11,8 @@ import {
 import hospitalIcon from "../assets/hospital.png";
 import logoutIcon from "../assets/logout.png";
 
+const cookies = new Cookies();
+
 const SideBar = () => (
   <div className="channel-list__sidebar">
     <div className="channel-list__sidebar__icon1">
@@ -17,7 +20,7 @@ const SideBar = () => (
         <img src={hospitalIcon} alt="Hospital" width="30" />
       </div>
     </div>
-    <div className="channel-list__sidebar__icon2">
+    <div className="channel-list__sidebar__icon2" onClick={handelOnClick}>
       <div className="icon1__inner">
         <img src={logoutIcon} alt="Logout" width="30" />
       </div>
@@ -30,6 +33,17 @@ const CompanyHeader = () => (
     <p className="channel-list__header__text"> Hamid Hassani </p>
   </div>
 );
+
+const handelOnClick = () => {
+  cookies.remove("token");
+  cookies.remove("userId");
+  cookies.remove("username");
+  cookies.remove("fullName");
+  cookies.remove("avatarURL");
+  cookies.remove("hashedPassword");
+  cookies.remove("phoneNumber");
+  window.location.reload();
+};
 
 const ChannelListContainer = () => {
   return (
