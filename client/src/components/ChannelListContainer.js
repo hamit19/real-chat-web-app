@@ -8,8 +8,8 @@ import {
   TeamChannelPreview,
 } from "../components/index";
 
-import hospitalIcon from "../assets/hospital.png";
-import logoutIcon from "../assets/logout.png";
+import { FiLogOut } from "react-icons/fi";
+import { FaReact } from "react-icons/fa";
 
 const cookies = new Cookies();
 
@@ -17,12 +17,12 @@ const SideBar = () => (
   <div className="channel-list__sidebar">
     <div className="channel-list__sidebar__icon1">
       <div className="icon1__inner">
-        <img src={hospitalIcon} alt="Hospital" width="30" />
+        <FaReact size={"30px"} />
       </div>
     </div>
     <div className="channel-list__sidebar__icon2" onClick={handelOnClick}>
       <div className="icon1__inner">
-        <img src={logoutIcon} alt="Logout" width="30" />
+        <FiLogOut />
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@ const SideBar = () => (
 
 const CompanyHeader = () => (
   <div className="channel-list__header">
-    <p className="channel-list__header__text"> Hamid Hassani </p>
+    <p className="channel-list__header__text"> React Developers </p>
   </div>
 );
 
@@ -45,17 +45,36 @@ const handelOnClick = () => {
   window.location.reload();
 };
 
-const ChannelListContainer = () => {
+const ChannelListContainer = ({
+  isCreating,
+  setIsCreating,
+  isEditing,
+  setIsEditing,
+  createType,
+  setCreateType,
+}) => {
   return (
-    <>
+    <div className="channel-list__main-wrapper">
       <SideBar />
       <div className="channel-list__list__wrapper">
         <CompanyHeader />
         <ChannelSearch />
+
         <ChannelList
           channelRenderFilterFn={() => {}}
           filters={{}}
-          List={(listProps) => <TeamChannelList {...listProps} type="team" />}
+          List={(listProps) => (
+            <TeamChannelList
+              {...listProps}
+              type="team"
+              isCreating={isCreating}
+              setIsCreating={setIsCreating}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              createType={createType}
+              setCreateType={setCreateType}
+            />
+          )}
           Preview={(previewProps) => (
             <TeamChannelPreview {...previewProps} type="team" />
           )}
@@ -64,14 +83,23 @@ const ChannelListContainer = () => {
           channelRenderFilterFn={() => {}}
           filters={{}}
           List={(listProps) => (
-            <TeamChannelList {...listProps} type="messaging" />
+            <TeamChannelList
+              {...listProps}
+              type="messaging"
+              isCreating={isCreating}
+              setIsCreating={setIsCreating}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              createType={createType}
+              setCreateType={setCreateType}
+            />
           )}
           Preview={(previewProps) => (
             <TeamChannelPreview {...previewProps} type="messaging" />
           )}
         />
       </div>
-    </>
+    </div>
   );
 };
 
