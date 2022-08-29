@@ -1,12 +1,7 @@
 import React from "react";
 import { Channel, useChatContext, MessageList } from "stream-chat-react";
 
-import {
-  InnerChannel,
-  CreateChannel,
-  EditChannel,
-  TeamMessage,
-} from "../components/index";
+import { InnerChannel, CreateChannel, EditChannel } from "../components/index";
 
 const ChannelContainer = ({
   isCreating,
@@ -16,8 +11,6 @@ const ChannelContainer = ({
   createType,
   setCreateType,
 }) => {
-  const { channel } = useChatContext();
-
   if (isCreating) {
     return (
       <div className="channel__container">
@@ -29,7 +22,7 @@ const ChannelContainer = ({
   if (isEditing) {
     return (
       <div className="channel__container">
-        <EditChannel isEditing={isEditing} />
+        <EditChannel isEditing={isEditing} setIsEditing={setIsEditing} />
       </div>
     );
   }

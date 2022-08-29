@@ -45,6 +45,14 @@ body {
   height: 100%;
 }
 
+.str-chat__typing-indicator__dots {
+  background-color: #0f172a !important;
+}
+
+.str-chat__message-simple-status-number {
+  color: #fff !important;
+}
+
 .auth__form-container_fields-content {
   display: flex;
   flex-direction: column;
@@ -402,6 +410,10 @@ body {
   color: #fff !important;
 }
 
+.str-chat__message-simple-name {
+  color: #fff !important;
+}
+
 .str-chat__message-simple__actions button svg {
   fill: #fff !important;
 }
@@ -473,7 +485,12 @@ body {
 
 .str-chat__message-simple-timestamp,
 .str-chat__date-separator-date {
-  color: #f8fafc !important;
+  color: #e6e6e6 !important;
+}
+
+.str-chat p {
+  color: #fff !important;
+  padding: 0 0.5rem !important;
 }
 
 .str-chat__date-separator-line {
@@ -830,7 +847,7 @@ body {
 .user-list__message {
   font-family: Helvetica Neue, sans-serif;
   font-size: 16px;
-  color: #2c2c30;
+  color: #fff !important;
   margin: 20px;
 }
 
@@ -892,6 +909,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
+  background-color: #1e293b;
+  border-radius: 0 16px 16px 0;
 }
 
 .edit-channel__header {
@@ -908,7 +927,7 @@ body {
   font-weight: bold;
   font-size: 18px;
   line-height: 22px;
-  color: #2c2c30;
+  color: #f1f5f9;
   margin-left: 20px;
 }
 
