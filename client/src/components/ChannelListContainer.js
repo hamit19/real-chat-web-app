@@ -72,7 +72,7 @@ const ChannelListContent = ({
       <SideBar />
       <div className="channel-list__list__wrapper">
         <CompanyHeader />
-        <ChannelSearch />
+        <ChannelSearch setToggleContainer={setToggleContainer} />
 
         <ChannelList
           filters={filters}
