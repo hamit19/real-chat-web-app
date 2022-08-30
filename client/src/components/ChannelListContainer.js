@@ -11,6 +11,8 @@ import {
 
 import { FiLogOut } from "react-icons/fi";
 import { FaReact } from "react-icons/fa";
+import { BsArrowLeftShort } from "react-icons/bs";
+import { BsArrowRightShort } from "react-icons/bs";
 
 const cookies = new Cookies();
 
@@ -151,8 +153,8 @@ const ChannelListContainer = ({
       <div
         className="channel-list__container-responsive"
         style={{
-          left: toggleContainer ? "0%" : "89%",
-          backgroundColor: "#005fff",
+          left: toggleContainer ? "0%" : "100%",
+          backgroundColor: toggleContainer ? "#1e293b" : "transparent",
         }}
       >
         <div
@@ -160,7 +162,9 @@ const ChannelListContainer = ({
           onClick={() =>
             setToggleContainer((prevToggleContainer) => !prevToggleContainer)
           }
-        ></div>
+        >
+          {toggleContainer ? <BsArrowRightShort /> : <BsArrowLeftShort />}
+        </div>
 
         <ChannelListContent
           setIsCreating={setIsCreating}

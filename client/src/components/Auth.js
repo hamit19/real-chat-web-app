@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import SignInImage from "../assets/signup.jpg";
+import signupVideo from "../assets/signupVideo.mp4";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
@@ -30,6 +30,12 @@ const Auth = () => {
     e.preventDefault();
 
     const { username, password, phoneNumber, avatarURL } = form;
+
+    if (isSignup) {
+      if (!username || !password || !phoneNumber || !avatarURL) {
+        return alert("Please fill the fields!");
+      }
+    }
 
     const URL = "http://localhost:5000/auth";
 
@@ -152,7 +158,9 @@ const Auth = () => {
         </div>
       </div>
       <div className="auth__form-container_image">
-        <img src={SignInImage} alt="Sign In" />
+        <video loop muted autoPlay>
+          <source src={signupVideo} type="video/mp4" />
+        </video>
       </div>
     </div>
   );
