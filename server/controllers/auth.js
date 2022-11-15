@@ -41,7 +41,9 @@ const login = async (req, res) => {
     const { users } = await client.queryUsers({ name: username });
 
     if (!users.length)
-      return res.status(400).json({ message: "User not found!" });
+      return res
+        .status(400)
+        .json({ message: "Incorrect username or password! " });
 
     const success = await bcrypt.compare(password, users[0].hashedPassword);
 
@@ -55,7 +57,7 @@ const login = async (req, res) => {
         userId: users[0].id,
       });
     } else {
-      res.status(500).json({ message: "Incorrect password " });
+      res.status(500).json({ message: "Incorrect username or password! " });
     }
   } catch (error) {
     console.log(error);
