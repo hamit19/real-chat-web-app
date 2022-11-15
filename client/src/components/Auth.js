@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import signupVideo from "../assets/signupVideo.mp4";
 import Cookies from "universal-cookie";
+import { ThreeDots } from "react-loader-spinner";
+import { toast } from "react-toastify";
 
 const cookies = new Cookies();
 
@@ -17,6 +19,7 @@ const initialState = {
 const Auth = () => {
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const switchMode = () => {
     setIsSignup((preventProp) => !preventProp);
@@ -33,34 +36,63 @@ const Auth = () => {
 
     if (isSignup) {
       if (!username || !password || !phoneNumber || !avatarURL) {
-        return alert("Please fill the fields!");
+        toast.warn("Please fill in all the fields and try again!");
+        return;
       }
     }
 
-    const URL = "http://localhost:5000/auth";
-
-    const {
-      data: { token, userId, hashedPassword, fullName },
-    } = await axios.post(`${URL}/${isSignup ? "signup" : "login"}`, {
-      fullName: form.fullName,
-      username,
-      password,
-      phoneNumber,
-      avatarURL,
-    });
-
-    cookies.set("token", token);
-    cookies.set("username", username);
-    cookies.set("fullName", fullName);
-    cookies.set("userId", userId);
-
-    if (isSignup) {
-      cookies.set("avatarURL", avatarURL);
-      cookies.set("phoneNumber", phoneNumber);
-      cookies.set("hashedPassword", hashedPassword);
+    if (!isSignup) {
+      if (!username || !password) {
+        toast.warn("Please fill in all the fields and try again!");
+        return;
+      }
     }
 
-    window.location.reload();
+    const URL = "https://react-developers.herokuapp.com/auth";
+    // const URL = "http://localhost:5000/auth";
+
+    try {
+      setIsLoading(true);
+      const {
+        data: { token, userId, hashedPassword, fullName },
+      } = await axios.post(`${URL}/${isSignup ? "signup" : "login"}`, {
+        fullName: form.fullName,
+        username,
+        password,
+        phoneNumber,
+        avatarURL,
+      });
+
+      cookies.set("token", token);
+      cookies.set("username", username);
+      cookies.set("fullName", fullName);
+      cookies.set("userId", userId);
+
+      if (isSignup) {
+        cookies.set("avatarURL", avatarURL);
+        cookies.set("phoneNumber", phoneNumber);
+        cookies.set("hashedPassword", hashedPassword);
+      }
+
+      toast.success(
+        isSignup
+          ? "Greate, you have registered successfully!"
+          : "Greate, your in!"
+      );
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (err) {
+      err &&
+        toast.error(
+          err?.response?.data?.message
+            ? err.response.data.message
+            : "Something went wrong please try again"
+        );
+
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -142,7 +174,15 @@ const Auth = () => {
               type="submit"
               className="auth__form-container_fields-content_button"
             >
-              <button>{isSignup ? "Sign Up" : "Sign In"}</button>
+              <button type="submit">
+                {isSignup && !isLoading
+                  ? "Sign Up"
+                  : !isSignup && !isLoading
+                  ? "Sign In"
+                  : isLoading && (
+                      <ThreeDots color="#fff" height="14" width="30" />
+                    )}
+              </button>
             </div>
           </form>
           <div className="auth__form-container_fields-account">
